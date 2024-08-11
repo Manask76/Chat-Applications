@@ -18,15 +18,19 @@ const Signup = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res=await axios.post(`${BASE_URL}/api/v1/user/register`,user,{
-        headers:{
-          'Content-Type':'application/json'
+      const token = localStorage.getItem("token"); // Get the token from localStorage
+
+      const res = await axios.post(`${BASE_URL}/api/v1/user/register`, user, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Add the Authorization header
         },
-        withCredentials:true
+        withCredentials: true
       });
-      if(res.data.success){
-        navigate('/login')
-        toast.success(res.data.message)
+
+      if (res.data.success) {
+        navigate('/login');
+        toast.success(res.data.message);
       }
     } catch (error) {
       toast.error(error.response.data.message)

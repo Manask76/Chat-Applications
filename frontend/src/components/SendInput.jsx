@@ -1,31 +1,36 @@
-import React, {useState } from 'react'
+import React, { useState } from 'react';
 import { IoSend } from "react-icons/io5";
 import axios from "axios";
-import {useDispatch,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMessages } from './redux/messageSlice';
 import { BASE_URL } from '..';
 
 const SendInput = () => {
     const [message, setMessage] = useState("");
     const dispatch = useDispatch();
-    const {selectedUser} = useSelector(store=>store.user);
-    const {messages} = useSelector(store=>store.message);
+    const { selectedUser } = useSelector(store => store.user);
+    const { messages } = useSelector(store => store.message);
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${BASE_URL}/api/v1/message/send/${selectedUser?._id}`, {message}, {
-                headers:{
-                    'Content-Type':'application/json'
+            const token = localStorage.getItem("token");
+            const res = await axios.post(`${BASE_URL}/api/v1/message/send/${selectedUser?._id}`, 
+            { message }, 
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Include the Bearer token
                 },
-                withCredentials:true
+                withCredentials: true
             });
-            dispatch(setMessages([...messages, res?.data?.newMessage]))
+            dispatch(setMessages([...messages, res?.data?.newMessage]));
         } catch (error) {
             console.log(error);
         } 
         setMessage("");
-    }
+    };
+
     return (
         <form onSubmit={onSubmitHandler} className='px-4 my-3'>
             <div className='w-full relative'>
@@ -41,7 +46,7 @@ const SendInput = () => {
                 </button>
             </div>
         </form>
-    )
+    );
 }
 
-export default SendInput
+export default SendInput;

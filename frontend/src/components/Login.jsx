@@ -23,8 +23,9 @@ const Login = () => {
         },
         withCredentials: true
       });
+      console.log(res.data.token);
+      localStorage.setItem("token",res.data.token)
       navigate("/");
-      console.log(res);
       dispatch(setAuthUser(res.data));
     } catch (error) {
       toast.error(error.response.data.message);
