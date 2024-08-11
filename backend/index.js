@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json()); 
 app.use(cookieParser());
 const corsOption={
-    origin:'http://localhost:3000',
+    origin:process.env.BASE_URL,
     credentials:true
 };
 app.use(cors(corsOption)); 
@@ -30,4 +30,8 @@ app.use("/api/v1/message",messageRoute);
 server.listen(PORT, ()=>{
     connectDB();
     console.log(`Server listen at prot ${PORT}`);
+});
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Something went wrong!' });
 });
