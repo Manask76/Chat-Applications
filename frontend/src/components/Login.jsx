@@ -23,8 +23,15 @@ const Login = () => {
         },
         withCredentials: true
       });
+<<<<<<< Updated upstream
       console.log(res.data.token);
       localStorage.setItem("token",res.data.token)
+=======
+      localStorage.setItem("token", res.data.token);
+      dispatch(setAuthUser(res.data));
+      
+      // Navigate to home page
+>>>>>>> Stashed changes
       navigate("/");
       dispatch(setAuthUser(res.data));
     } catch (error) {

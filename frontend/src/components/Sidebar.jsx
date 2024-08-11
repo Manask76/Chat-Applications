@@ -18,8 +18,18 @@ const Sidebar = () => {
 
     const logoutHandler = async () => {
         try {
+<<<<<<< Updated upstream
             const res = await axios.get(`${BASE_URL}/api/v1/user/logout`);
             localStorage.setItem("token","")
+=======
+            const token = localStorage.getItem("token"); // Get the token from localStorage
+            const res = await axios.get(`${BASE_URL}/api/v1/user/logout`, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Add the Authorization header
+                },
+                withCredentials: true
+            });
+>>>>>>> Stashed changes
             navigate("/login");
             toast.success(res.data.message);
             dispatch(setAuthUser(null));
