@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import toast from "react-hot-toast"
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAuthUser } from './redux/userSlice';
@@ -23,17 +23,25 @@ const Login = () => {
         },
         withCredentials: true
       });
-      navigate("/");
-      console.log(res);
+      
+      // Save token and set authenticated user
+      localStorage.setItem("token", res.data.token);
       dispatch(setAuthUser(res.data));
+      
+      // Navigate to home page
+      navigate("/");
     } catch (error) {
-      toast.error(error.response.data.message);
+      // Handle errors and display a toast message
+      const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+      toast.error(errorMessage);
       console.log(error);
     }
+
+    // Reset form fields
     setUser({
       username: "",
       password: ""
-    })
+    });
   }
 
   return (
@@ -51,6 +59,7 @@ const Login = () => {
               className="w-full input input-bordered h-10"
               type="text"
               placeholder="username"
+              required
             />
           </div>
           <div>
@@ -63,6 +72,7 @@ const Login = () => {
               className="w-full input input-bordered h-10"
               type="password"
               placeholder="password"
+              required
             />
           </div>
           <div className="text-center my-2">
