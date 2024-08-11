@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3a8be6f4.css",
+    "main.js": "/static/js/main.54523495.js",
+    "static/media/pexels-veeterzy-303383.jpg": "/static/media/pexels-veeterzy-303383.54136981f81244e4a177.jpg",
+    "index.html": "/index.html",
+    "main.3a8be6f4.css.map": "/static/css/main.3a8be6f4.css.map",
+    "main.54523495.js.map": "/static/js/main.54523495.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a8be6f4.css",
+    "static/js/main.54523495.js"
+  ]
+}
